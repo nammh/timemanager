@@ -8,6 +8,8 @@ import datetime
 import csv
 import msvcrt
 import timeline
+import statmanager
+import pomodoro
 
 def create_timeline(_title, _tl):
     """
@@ -40,6 +42,8 @@ def finish_timeline(_tl):
     return time_line
 
 def main_loop(options={}):
+    print("c: Create timeline.\nf: Finish timeline.\n" +
+          "t: Time spent on the task.\np: Pomodoro\nq: Quit.")
     if not os.path.exists("./timeline.csv"):
         with open("timeline.csv", "w") as ofs:
             writer = csv.writer(ofs)
@@ -59,10 +63,17 @@ def main_loop(options={}):
         elif _input == b"t":
             now = datetime.datetime.now()
             print(_tl.title + ": " + str(now-_tl.start))
+        elif _input == b"p":
+            _tl = create_timeline("Work", _tl)
+            pomodoro.main(25, 5, 1)
+            _tl = finish_timeline(_tl)
+        elif _input == b"s":
+            _tl = finish_timeline(_tl)
+            statmanager.plot_today()
         else:
             print("Command("+str(_input)+") does not exist.")
             print("c: Create timeline.\nf: Finish timeline.\n" +
-                  "t: Time spent on the task.\nq: Quit.")
+                  "t: Time spent on the task.\np: Pomodoro\nq: Quit.")
 
 if __name__ == "__main__":
     main_loop()
