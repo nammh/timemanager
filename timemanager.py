@@ -9,7 +9,14 @@ import csv
 import msvcrt
 import timeline
 import statmanager
-import pomodoro
+try:
+    import pomodoro
+    menu = "c: Create timeline.\nf: Finish timeline.\n" +\
+           "t: Time spent on the task.\np: Pomodoro\ns: Show timeline.\n" +\
+           "q: Quit."
+except ModuleNotFoundError:
+    menu = "c: Create timeline.\nf: Finish timeline.\n" +\
+           "t: Time spent on the task.\ns: Show timeline.\nq: Quit."
 
 def create_timeline(_title, _tl):
     """
@@ -42,8 +49,7 @@ def finish_timeline(_tl):
     return time_line
 
 def main_loop(options={}):
-    print("c: Create timeline.\nf: Finish timeline.\n" +
-          "t: Time spent on the task.\np: Pomodoro\nq: Quit.")
+    print(menu)
     if not os.path.exists("./timeline.csv"):
         with open("timeline.csv", "w") as ofs:
             writer = csv.writer(ofs)
@@ -72,8 +78,7 @@ def main_loop(options={}):
             statmanager.plot_today()
         else:
             print("Command("+str(_input)+") does not exist.")
-            print("c: Create timeline.\nf: Finish timeline.\n" +
-                  "t: Time spent on the task.\np: Pomodoro\nq: Quit.")
+            print(menu)
 
 if __name__ == "__main__":
     main_loop()

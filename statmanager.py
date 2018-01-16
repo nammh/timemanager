@@ -67,4 +67,5 @@ def plot_today():
     plt.tight_layout()
     plt.show()
 
-plot_today()
+if __name__ == "__main__":
+    plot_today()
