@@ -2,11 +2,6 @@
 """
 Copyright 2018 Moohyeon Nam
 Last Modified: 2018. 01. 16
-
-TODO
-- Alarm
-- Statistics
-- Integration with pomodoro
 """
 import os
 import datetime
@@ -28,12 +23,12 @@ def create_timeline(_title, _tl):
     print("Creates a new timeline " + _title + ".")
     return time_line
 
-def finish_timeline(_tl, quit=False):
+def finish_timeline(_tl):
     """
     Finish the timeline _tl and return idle timeline
     """
-    if _tl.title == "Idle" and not quit:
-        print("Already Idle.")
+    if _tl.title == "Idle":
+        print("Idle.")
         return _tl
     now = _tl.finish()
     with open("timeline.csv", "a") as ofs:
